@@ -28,13 +28,19 @@ def alunos_ja_cadastrados():
 def verifica_aluno_exstir(alunos_recebido, alunos_existentes):
     retorno = ""
     if alunos_recebido in alunos_existentes:
-        retorno =  "aluno já presente em banco de dados"
+        retorno =  True
     else:
-        retorno = "aluno não identificado no banco de dados, pode ser adicionado"
+        retorno = False
 
     return retorno
-    
 
-nome_para_verificar_ou_cadastrar =  input(str("Qual aluno deseja cadastrar?: "))
-print(verifica_aluno_exstir(nome_para_verificar_ou_cadastrar, alunos_ja_cadastrados()))
+
+if __name__ == "__main__":
+    while True:
+        nome_para_verificar_ou_cadastrar =  input(str("Qual aluno deseja cadastrar?: "))
+        if verifica_aluno_exstir(nome_para_verificar_ou_cadastrar.strip(), alunos_ja_cadastrados()) == False:
+            info_aluno(nome_para_verificar_ou_cadastrar)
+            break
+        else:
+            print("aluno já presente em banco de dados")
 

@@ -1,0 +1,1 @@
+import armazenamento_info
