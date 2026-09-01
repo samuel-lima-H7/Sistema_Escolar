@@ -2,6 +2,9 @@ import os
 import csv
 from armazenamento_info import verifica_aluno_exstir, alunos_ja_cadastrados
 
+
+materias = ["matemática", "português", "ciências", "geografia", "história", "artes", "educação física"]
+
 def bimestre():
     while True:
         try:
@@ -19,7 +22,19 @@ def bimestre():
     return quantidade_bimestres
 
 def materia_escolar():
-    materia = str(input("Qual matéria deseja agregar nota?\nMatérias disponíveis: Matemática, Português, Ciências, Geografia, História, Artes, Educação Física\nDigite a matéria que deseja agregar nota: "))
+    dado_materia_escolar = []
+    while True:
+        try:
+            while True:
+                materia = str(input("Qual matéria deseja agregar nota?\nMatérias disponíveis: Matemática, Português, Ciências, Geografia, História, Artes, Educação Física\nDigite a matéria que deseja agregar nota: "))
+                if materia.strip().lower() in materias:
+                    dado_materia_escolar.append(materia)
+                    break
+                else:
+                    print("Texto incorreto, digite novamente, reveja os acentos, as letras, etc.")
+            break
+        except: 
+            print("Valor inválido, digite novamente!")
 
 def alunos_agregar_nota():
     while True:
@@ -35,5 +50,5 @@ def alunos_agregar_nota():
             print("valor inválido, digite novamente!")
     return quant
 
-alunos_agregar_nota()
 
+materia_escolar()
