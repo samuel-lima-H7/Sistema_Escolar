@@ -2,7 +2,7 @@ import os
 import csv
 from armazenamento_info import verifica_aluno_exstir, alunos_ja_cadastrados
 
-
+dados_gerais = list()
 materias = ["matemática", "português", "ciências", "geografia", "história", "artes", "educação física"]
 
 def bimestre():
@@ -52,21 +52,24 @@ def alunos_agregar_nota():
     return quant
 
 def armazenamento_geral():
-    lista_geral == []
-    numero_alunos = alunos_agregar_nota()
-    for c in range(numero_alunos):
-        quant_matérias_já_cadastradas = 0
-        while quant_matérias_já_cadastradas <= len(materias):
-            continuar = str(input("deseja continuar? "))
-            if continuar == "não":
-                break
-            else
-                disciplina_escolar_nota = materia_escolar()
-                bimestres_escolar_nota = bemestre()
-                for i in range(bimestres_escolar_nota):
-                    nota = int(input(f"Digite a nota do aluno na matéria {disciplina_escolar_nota} no bimestre {i}"))
-                    quant_matérias_já_cadastradas =+ 1
+    lista_geral = []
+    quant_matérias_já_cadastradas = 0
+    while quant_matérias_já_cadastradas < len(materias):
+        continuar = str(input("deseja adicionar notas a mais uma matéria? "))
+        if continuar == "não":
+            break
+        else
+            disciplina_escolar_nota = materia_escolar()
+            bimestres_escolar_nota = bemestre()
+            for i in range(bimestres_escolar_nota):
+                nota = int(input(f"Digite a nota do aluno na matéria {disciplina_escolar_nota} no bimestre {i}"))
+                quant_matérias_já_cadastradas =+ 1
+
+
                     
+
+
+
 
 
 
