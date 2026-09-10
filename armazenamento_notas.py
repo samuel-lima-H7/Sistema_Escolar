@@ -35,6 +35,7 @@ def materia_escolar():
             break
         except: 
             print("Valor inválido, digite novamente!")
+    return materia
 
 def alunos_agregar_nota():
     while True:
@@ -50,5 +51,30 @@ def alunos_agregar_nota():
             print("valor inválido, digite novamente!")
     return quant
 
+def armazenamento_geral():
+    lista_geral == []
+    numero_alunos = alunos_agregar_nota()
+    for c in range(numero_alunos):
+        quant_matérias_já_cadastradas = 0
+        while quant_matérias_já_cadastradas <= len(materias):
+            continuar = str(input("deseja continuar? "))
+            if continuar == "não":
+                break
+            else
+                disciplina_escolar_nota = materia_escolar()
+                bimestres_escolar_nota = bemestre()
+                for i in range(bimestres_escolar_nota):
+                    nota = int(input(f"Digite a nota do aluno na matéria {disciplina_escolar_nota} no bimestre {i}"))
+                    quant_matérias_já_cadastradas =+ 1
+                    
 
-materia_escolar()
+
+
+"""
+if __name__ == "__main__":
+    sim_ou_não = str(input("Deseja adinionar alguma informação?[sim ou não]: ")[0])
+    if sim_ou_não == "s":
+        
+    else:
+        print("")
+"""
