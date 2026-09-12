@@ -3,7 +3,6 @@ import csv
 from armazenamento_info import verifica_aluno_exstir, alunos_ja_cadastrados
 
 
-lista_do_aluno = []
 dados_gerais = []
 materias = ["matemática", "português", "ciências", "geografia", "história", "artes", "educação física"]
 
@@ -54,13 +53,13 @@ def alunos_agregar_nota():
     return quant
 
 def armazenamento_geral(nome_do_aluno):
-    lista_do_aluno.append(nome_do_aluno)
     quant_matérias_já_cadastradas = 0
 
     while quant_matérias_já_cadastradas < len(materias):
 
         continuar = str(input("deseja adicionar notas a mais uma matéria?: "))
         if continuar.strip().lower()[0] == "s":
+            lista_do_aluno = []
             nota_para_cada_materia = []
             dicionário_para_cada_matéria = {}
 
@@ -76,6 +75,8 @@ def armazenamento_geral(nome_do_aluno):
 
             dicionário_para_cada_matéria[f"{disciplina_escolar_nota}"] = nota_para_cada_materia
             lista_do_aluno.append(dicionário_para_cada_matéria)
+            lista_do_aluno.insert(0, nome_do_aluno)
+            dados_gerais.append(lista_do_aluno)
 
         elif continuar.strip().lower()[0] == "n":
             break
@@ -83,7 +84,7 @@ def armazenamento_geral(nome_do_aluno):
         else:
             print("digite uma valor válido")
 
-    return lista_do_aluno
+    
 
 
 def retorna_lista_geral_com_materias():
@@ -112,3 +113,4 @@ def retorna_lista_geral_com_materias():
 
 retorna_lista_geral_com_materias()
         
+print(dados_gerais)
