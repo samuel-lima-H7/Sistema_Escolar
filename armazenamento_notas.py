@@ -2,7 +2,9 @@ import os
 import csv
 from armazenamento_info import verifica_aluno_exstir, alunos_ja_cadastrados
 
-dados_gerais = list()
+
+lista_do_aluno = []
+dados_gerais = []
 materias = ["matemática", "português", "ciências", "geografia", "história", "artes", "educação física"]
 
 def bimestre():
@@ -51,33 +53,62 @@ def alunos_agregar_nota():
             print("valor inválido, digite novamente!")
     return quant
 
-def armazenamento_geral():
-    lista_geral = []
+def armazenamento_geral(nome_do_aluno):
+    lista_do_aluno.append(nome_do_aluno)
     quant_matérias_já_cadastradas = 0
+
     while quant_matérias_já_cadastradas < len(materias):
-        continuar = str(input("deseja adicionar notas a mais uma matéria? "))
-        if continuar == "não":
-            break
-        else
-            disciplina_escolar_nota = materia_escolar()
-            bimestres_escolar_nota = bemestre()
-            for i in range(bimestres_escolar_nota):
-                nota = int(input(f"Digite a nota do aluno na matéria {disciplina_escolar_nota} no bimestre {i}"))
-                quant_matérias_já_cadastradas =+ 1
 
+        continuar = str(input("deseja adicionar notas a mais uma matéria?: "))
+        if continuar.strip().lower()[0] == "s":
+            nota_para_cada_materia = []
+            dicionário_para_cada_matéria = {}
 
-                    
-
-
-
-
-
-
-"""
-if __name__ == "__main__":
-    sim_ou_não = str(input("Deseja adinionar alguma informação?[sim ou não]: ")[0])
-    if sim_ou_não == "s":
         
-    else:
-        print("")
-"""
+            disciplina_escolar_nota = materia_escolar()
+            bimestres_escolar_nota = bimestre()
+
+            for i in range(bimestres_escolar_nota):
+
+                nota = int(input(f"Digite a nota do aluno na matéria {disciplina_escolar_nota} no bimestre {i+1}: "))
+                quant_matérias_já_cadastradas =+ 1
+                nota_para_cada_materia.append(nota)
+
+            dicionário_para_cada_matéria[f"{disciplina_escolar_nota}"] = nota_para_cada_materia
+            lista_do_aluno.append(dicionário_para_cada_matéria)
+
+        elif continuar.strip().lower()[0] == "n":
+            break
+            
+        else:
+            print("digite uma valor válido")
+
+    return lista_do_aluno
+
+
+def retorna_lista_geral_com_materias():
+    lista_dos_alunos_a_serem_armazenadas = []
+    print("Os alunos disponíveis para cadastro de notas: ")
+    for i in alunos_ja_cadastrados():
+        print(i)
+    print("")
+    numero_de_alunos = alunos_agregar_nota()
+    for quantidade in range(numero_de_alunos):
+        while True:
+            try:
+                while True:
+                    student = str(input("Qual desses alunos deseja cadastrar?: "))
+                    if student.strip().lower() in alunos_ja_cadastrados():
+                        break
+                    else:
+                        print("Aluno não disponível: ")
+
+                break
+            except:
+                print("valor inválido, digite novamente!!!")
+        
+        armazenamento_geral(student)
+
+
+retorna_lista_geral_com_materias()
+        
