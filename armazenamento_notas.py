@@ -106,8 +106,8 @@ def retorna_lista_geral_com_materias():
             try:
                 while True:
                     print("=-"*30)
-                    student = str(input("Qual desses alunos deseja cadastrar?: "))
-                    if student.strip().lower() in alunos_ja_cadastrados():
+                    student = str(input("Qual desses alunos deseja cadastrar?: ")).strip().lower()
+                    if student in alunos_ja_cadastrados():
                         break
                     else:
                         print("\nAluno não disponível! ")
@@ -120,5 +120,3 @@ def retorna_lista_geral_com_materias():
 
 
 retorna_lista_geral_com_materias()
-        
-print(dados_gerais)
