@@ -26,7 +26,7 @@ def polimento_de_dados():
 
 polimento_de_dados()
 
-
+print(lista_geral)
 
 
 def gerar_lista_para_csv(dados_gerais):
@@ -34,8 +34,79 @@ def gerar_lista_para_csv(dados_gerais):
     indice_para_cada_materia = 0
 
     for cont in dados_gerais:
-        linha_csv = [cont[0], "", "", "", "", "", "", "", ""]
+
+        nome_vingente = cont[0]
+
         for key, value in cont[1].items():
+
+            if key == "matemática":
+                indice_para_cada_materia = 1
+
+            elif key == "português":
+                indice_para_cada_materia = 2
+
+            elif key == "ciências":
+                indice_para_cada_materia = 3
+
+            elif key == "geografia":
+                indice_para_cada_materia = 4
+
+            elif key == "história":
+                indice_para_cada_materia = 5
+
+            elif key == "artes":
+                indice_para_cada_materia = 6
+
+            elif key == "educação física":
+                indice_para_cada_materia = 7
+
+            for indice_bimestre, nota in enumerate(value):
+
+                # Verifica se já existe uma linha desse aluno
+                if indice_bimestre < len(lista_para_cada_linha):
+
+                    # Pega a linha correspondente ao bimestre
+                    linha_csv = lista_para_cada_linha[indice_bimestre]
+
+                    # Verifica se é o mesmo aluno
+                    if linha_csv[0] == nome_vingente:
+
+                        # Apenas adiciona a nova matéria
+                        linha_csv[indice_para_cada_materia] = str(nota)
+
+                    else:
+
+                        linha_csv = [nome_vingente, "", "", "", "", "", "", ""]
+
+                        linha_csv[indice_para_cada_materia] = str(nota)
+
+                        lista_para_cada_linha.append(linha_csv)
+
+                else:
+
+                    linha_csv = [nome_vingente, "", "", "", "", "", "", ""]
+
+                    linha_csv[indice_para_cada_materia] = str(nota)
+
+                    lista_para_cada_linha.append(linha_csv)
+
+    return lista_para_cada_linha
+
+print(gerar_lista_para_csv(lista_geral))
+
+
+
+'''
+
+VERSÃO ANTIGA DA ESTRUTURA
+
+def gerar_lista_para_csv(dados_gerais):
+    lista_para_cada_linha = []
+    indice_para_cada_materia = 0
+
+    for cont in dados_gerais:
+        for key, value in cont[1].items():
+            nome_vingente = cont[0]
             if key == "matemática":
                 indice_para_cada_materia = 1
 
@@ -57,49 +128,43 @@ def gerar_lista_para_csv(dados_gerais):
             elif key == "educação física":
                 indice_para_cada_materia = 7
             
+            if nome_vingente == lista_para_cada_linha[]
+            
             for nota in value:
+                linha_csv = [cont[0], "", "", "", "", "", "", "", ""]
                 if indice_para_cada_materia == 1:
-                    del linha_csv[1]
-                    linha_csv.insert(1, f"{nota}")
+                    linha_csv[indice_para_cada_materia] = str(nota)
                     lista_para_cada_linha.append(linha_csv)
 
                 elif indice_para_cada_materia == 2:
-                    del linha_csv[2]
-                    linha_csv.insert(2, f"{nota}")
+                    linha_csv[indice_para_cada_materia] = str(nota)
                     lista_para_cada_linha.append(linha_csv)
-                    
+
                 elif  indice_para_cada_materia == 3:
-                    del linha_csv[3]
-                    linha_csv.insert(3, f"{nota}")
+                    linha_csv[indice_para_cada_materia] = str(nota)
                     lista_para_cada_linha.append(linha_csv)
 
                 elif indice_para_cada_materia == 4:
-                    del linha_csv[4]
-                    linha_csv.insert(4, f"{nota}")
+                    linha_csv[indice_para_cada_materia] = str(nota)
                     lista_para_cada_linha.append(linha_csv)
 
+
                 elif indice_para_cada_materia == 5:
-                    del linha_csv[5]
-                    linha_csv.insert(5, f"{nota}")
+                    linha_csv[indice_para_cada_materia] = str(nota)
                     lista_para_cada_linha.append(linha_csv)
 
                 elif indice_para_cada_materia == 6:
-                    del linha_csv[6]
-                    linha_csv.insert(6, f"{nota}")
+                    linha_csv[indice_para_cada_materia] = str(nota)
                     lista_para_cada_linha.append(linha_csv)
+
 
                 elif indice_para_cada_materia == 7:
-                    del linha_csv[7]
-                    linha_csv.insert(7, f"{nota}")
+                    linha_csv[indice_para_cada_materia] = str(nota)
                     lista_para_cada_linha.append(linha_csv)
 
-                lista_para_cada_linha.append(linha_csv.copy())
+                lista_para_cada_linha.append(linha_csv)
 
-    linha.append(lista_para_cada_linha)
+    return lista_para_cada_linha
+'''
 
 
-gerar_lista_para_csv(lista_geral)
-
-for c in linha:
-    print(f"{c}",end="")
-    print("")
