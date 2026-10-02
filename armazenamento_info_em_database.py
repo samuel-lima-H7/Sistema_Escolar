@@ -1,14 +1,15 @@
+from armazenamento_notas import dados_gerais
+
+
 linha = []
 lista_geral = []
 lista_para_armazenar_no_csv = []
 
 
-dados = [ ['bartolomeu', {'matemática': [1, 2, 3]}], ['bartolomeu', {'geografia': [1, 2, 3]}], ['samuel', {'matemática': [1, 2, 3]}], ['samuel', {'geografia': [1, 2, 3]}]]
-
 def polimento_de_dados():
     materias_por_aluno = {}
     
-    for item in dados:
+    for item in dados_gerais:
         nome = item[0]
         materia_dict = item[1]
         
@@ -20,13 +21,18 @@ def polimento_de_dados():
 
 
     for nome, dicionario_materias in materias_por_aluno.items():
+
+        for materia, notas in dicionario_materias.items():
+
+            while len(notas) < 4:
+                notas.append("")
+
         linha_aluno = [nome, dicionario_materias]
         
         lista_geral.append(linha_aluno)
 
 polimento_de_dados()
 
-print(lista_geral)
 
 
 def gerar_lista_para_csv(dados_gerais):
@@ -92,7 +98,7 @@ def gerar_lista_para_csv(dados_gerais):
 
     return lista_para_cada_linha
 
-print(gerar_lista_para_csv(lista_geral))
+
 
 
 
