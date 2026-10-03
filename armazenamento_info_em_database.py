@@ -42,6 +42,7 @@ def gerar_lista_para_csv(dados_gerais):
     for cont in dados_gerais:
 
         nome_vingente = cont[0]
+        linhas_do_aluno = []
 
         for key, value in cont[1].items():
 
@@ -69,35 +70,25 @@ def gerar_lista_para_csv(dados_gerais):
             for indice_bimestre, nota in enumerate(value):
 
                 # Verifica se já existe uma linha desse aluno
-                if indice_bimestre < len(lista_para_cada_linha):
+                if indice_bimestre < len(linhas_do_aluno):
 
                     # Pega a linha correspondente ao bimestre
-                    linha_csv = lista_para_cada_linha[indice_bimestre]
+                    linha_csv = linhas_do_aluno[indice_bimestre]
 
-                    # Verifica se é o mesmo aluno
-                    if linha_csv[0] == nome_vingente:
-
-                        # Apenas adiciona a nova matéria
-                        linha_csv[indice_para_cada_materia] = str(nota)
-
-                    else:
-
-                        linha_csv = [nome_vingente, "", "", "", "", "", "", ""]
-
-                        linha_csv[indice_para_cada_materia] = str(nota)
-
-                        lista_para_cada_linha.append(linha_csv)
+                    # Adiciona a nova matéria
+                    linha_csv[indice_para_cada_materia] = str(nota)
 
                 else:
 
+                    # Cria uma nova linha para o aluno
                     linha_csv = [nome_vingente, "", "", "", "", "", "", ""]
 
                     linha_csv[indice_para_cada_materia] = str(nota)
 
                     lista_para_cada_linha.append(linha_csv)
+                    linhas_do_aluno.append(linha_csv)
 
     return lista_para_cada_linha
-
 
 
 

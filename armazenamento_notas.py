@@ -82,7 +82,7 @@ def armazenamento_geral(nome_do_aluno):
             lista_do_aluno.append(dicionário_para_cada_matéria)
             lista_do_aluno.insert(0, nome_do_aluno)
             dados_gerais.append(lista_do_aluno)
-            quant_matérias_já_cadastradas =+ 1
+            quant_matérias_já_cadastradas += 1
 
         elif continuar.strip().lower()[0] == "n":
             break
