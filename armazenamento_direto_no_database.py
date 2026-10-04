@@ -35,8 +35,6 @@ for indice, valores in enumerate(dados_polidos):
     dados_sem_nessecidade_de_alteração.append(valores)
 
 
-print(dados_sem_nessecidade_de_alteração)
-
 
 with open("data_base.csv", "w", newline="", encoding="utf-8") as leitura_do_csv:
 
