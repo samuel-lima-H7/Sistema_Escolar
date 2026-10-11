@@ -119,4 +119,5 @@ def retorna_lista_geral_com_materias():
         armazenamento_geral(student)
 
 
-retorna_lista_geral_com_materias()
+if __name__ == "__main__":
+    retorna_lista_geral_com_materias()

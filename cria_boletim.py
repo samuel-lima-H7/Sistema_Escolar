@@ -1,4 +1,5 @@
-from resgate_de_info import aluno, listas_para_pdf
+
+import os
 
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
@@ -12,89 +13,45 @@ from reportlab.platypus import (
     Spacer
 )
 
-import os
+import resgate_de_info
 
 
 def criar_pdf_boletim(aluno, listas_para_pdf):
 
-    # ==========================================================
-    # 1. LOCAL DA PASTA DOS BOLETINS
-    # ==========================================================
-
     pasta_projeto = os.path.dirname(os.path.abspath(__file__))
+    pasta_boletins = os.path.join(pasta_projeto, "boletins")
 
-    pasta_boletins = os.path.join(
-        pasta_projeto,
-        "boletins"
-    )
-
-    # Cria a pasta caso ela não exista
     os.makedirs(pasta_boletins, exist_ok=True)
-
-
-    # ==========================================================
-    # 2. NOME DO ARQUIVO
-    # ==========================================================
 
     nome_arquivo = os.path.join(
         pasta_boletins,
         f"Boletim_{aluno}.pdf"
     )
 
-
-    # ==========================================================
-    # 3. PREPARAÇÃO DOS DADOS DA TABELA
-    # ==========================================================
-
     dados_tabela = []
 
     for linha in listas_para_pdf:
-
-        # Verifica se a linha realmente é uma lista
-        if not isinstance(linha, list):
-            linha = [linha]
-
         nova_linha = []
 
         for item in linha:
-
-            # Converte todos os valores para texto
-            # Isso evita problemas com o ReportLab
             if item is None:
                 item = ""
-
-            else:
-                item = str(item)
-
-            nova_linha.append(item)
+            nova_linha.append(str(item))
 
         dados_tabela.append(nova_linha)
-
-
-    # ==========================================================
-    # 4. VERIFICAÇÃO DA TABELA
-    # ==========================================================
 
     if not dados_tabela:
         print("Erro: não existem dados para criar o boletim.")
         return
 
-
-    # Todas as linhas precisam ter 6 colunas
     quantidade_colunas = 6
 
     for linha in dados_tabela:
-
         while len(linha) < quantidade_colunas:
             linha.append("")
 
         if len(linha) > quantidade_colunas:
             del linha[quantidade_colunas:]
-
-
-    # ==========================================================
-    # 5. CRIAÇÃO DO PDF
-    # ==========================================================
 
     pdf = SimpleDocTemplate(
         nome_arquivo,
@@ -105,14 +62,7 @@ def criar_pdf_boletim(aluno, listas_para_pdf):
         bottomMargin=40
     )
 
-
     elementos = []
-
-
-    # ==========================================================
-    # 6. TÍTULO
-    # ==========================================================
-
     estilos = getSampleStyleSheet()
 
     estilo_titulo = estilos["Title"]
@@ -124,125 +74,53 @@ def criar_pdf_boletim(aluno, listas_para_pdf):
     )
 
     elementos.append(titulo)
-
-    elementos.append(
-        Spacer(1, 20)
-    )
-
-
-    # ==========================================================
-    # 7. CRIAÇÃO DA TABELA
-    # ==========================================================
+    elementos.append(Spacer(1, 20))
 
     tabela = Table(
         dados_tabela,
-        colWidths=[
-            100,
-            75,
-            75,
-            75,
-            75,
-            60
-        ]
+        colWidths=[100, 75, 75, 75, 75, 60]
     )
-
-
-    # ==========================================================
-    # 8. FORMATAÇÃO DA TABELA
-    # ==========================================================
 
     tabela.setStyle(
         TableStyle([
-
-            # Cabeçalho
-            (
-                "BACKGROUND",
-                (0, 0),
-                (-1, 0),
-                colors.grey
-            ),
-
-            (
-                "TEXTCOLOR",
-                (0, 0),
-                (-1, 0),
-                colors.white
-            ),
-
-            (
-                "FONTNAME",
-                (0, 0),
-                (-1, 0),
-                "Helvetica-Bold"
-            ),
-
-            # Alinhamento
-            (
-                "ALIGN",
-                (0, 0),
-                (-1, -1),
-                "CENTER"
-            ),
-
-            (
-                "VALIGN",
-                (0, 0),
-                (-1, -1),
-                "MIDDLE"
-            ),
-
-            # Linhas da tabela
-            (
-                "GRID",
-                (0, 0),
-                (-1, -1),
-                1,
-                colors.black
-            ),
-
-            # Espaçamento
-            (
-                "BOTTOMPADDING",
-                (0, 0),
-                (-1, 0),
-                8
-            ),
-
-            (
-                "TOPPADDING",
-                (0, 0),
-                (-1, 0),
-                8
-            ),
-
+            ("BACKGROUND", (0, 0), (-1, 0), colors.grey),
+            ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+            ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+            ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+            ("GRID", (0, 0), (-1, -1), 1, colors.black),
+            ("BOTTOMPADDING", (0, 0), (-1, 0), 8),
+            ("TOPPADDING", (0, 0), (-1, 0), 8),
         ])
     )
 
-
     elementos.append(tabela)
-
-
-    # ==========================================================
-    # 9. GERAÇÃO DO PDF
-    # ==========================================================
-
     pdf.build(elementos)
 
-
-    print(
-        f"\nBoletim criado com sucesso!"
-    )
-
-    print(
-        f"Local: {nome_arquivo}"
-    )
+    print("\nBoletim criado com sucesso!")
+    print(f"Local: {nome_arquivo}")
 
 
-# ==============================================================
-# EXECUTA A CRIAÇÃO DO BOLETIM
-# ==============================================================
+def executar_geracao_do_boletim():
+    # Solicita o aluno e recupera suas notas
+    alunos = resgate_de_info.verificações()
 
-criar_pdf_boletim(
-    aluno,
-    listas_para_pdf
-)
+    if not alunos:
+        print("Nenhum registro encontrado para esse aluno.")
+        return
+
+    aluno = alunos[0][0]
+
+    # Gera a tabela com as notas recuperadas
+    dados_tabela = resgate_de_info.formação_de_lista_para_dados(alunos)
+
+    # A função de formação deve retornar os dados da tabela
+    if not dados_tabela:
+        print("Não foi possível preparar os dados do boletim.")
+        return
+
+    criar_pdf_boletim(aluno, dados_tabela)
+
+
+if __name__ == "__main__":
+    executar_geracao_do_boletim()

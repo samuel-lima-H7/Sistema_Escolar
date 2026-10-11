@@ -32,29 +32,35 @@ def formação_de_lista_para_dados(alunos):
         linha.append(total)
     
     listas_para_pdf.insert(0,["Matérias", "1º Bimestre", "2º Bimestre", "3º Bimestre", "4º Bimestre", "Total"])
+    return listas_para_pdf
 
-while True:
-    try:
-        while True:
-            aluno = str(input("Digite o nome do aluno que deseja o boletim: "))
-            if aluno in alunos_disponiveis:
-                break
+def verificações():
+    while True:
+        try:
+            while True:
+                aluno = str(input("Digite o nome do aluno que deseja o boletim: "))
+                if aluno in alunos_disponiveis:
+                    break
+                else:
+                    print("Digite novamente, valor inválido")
+            break
+        except:
+            print("Digite novamente, valor inválido")
+
+
+    with open("data_base.csv", "r", newline="") as objeto_de_leitura:
+        objeto_csv = csv.reader(objeto_de_leitura, delimiter=";")
+        for c in objeto_csv:
+            if c[0] != aluno:
+                continue
             else:
-                print("Digite novamente, valor inválido")
-        break
-    except:
-        print("Digite novamente, valor inválido")
+                alunos_para_boletim.append(c)
 
+    return alunos_para_boletim
 
-with open("data_base.csv", "r", newline="") as objeto_de_leitura:
-    objeto_csv = csv.reader(objeto_de_leitura, delimiter=";")
-    for c in objeto_csv:
-        if c[0] != aluno:
-            continue
-        else:
-            alunos_para_boletim.append(c)
-
-formação_de_lista_para_dados(alunos_para_boletim)
+if __name__ == "__main__":
+    verificações()
+    formação_de_lista_para_dados(alunos_para_boletim)
         
 
     

@@ -1,3 +1,4 @@
+
 from armazenamento_notas import dados_gerais
 
 
@@ -7,38 +8,50 @@ lista_para_armazenar_no_csv = []
 
 
 def polimento_de_dados():
+    # ALTERADO: limpa os resultados anteriores antes de processar
+    # os dados novos. Evita duplicações ao executar novamente.
+    lista_geral.clear()
+
     materias_por_aluno = {}
-    
+
+    # MANTIDO: agrupa as matérias pelo nome de cada aluno.
     for item in dados_gerais:
         nome = item[0]
         materia_dict = item[1]
-        
+
         if nome not in materias_por_aluno:
             materias_por_aluno[nome] = {}
-            
 
         materias_por_aluno[nome].update(materia_dict)
 
-
+    # MANTIDO: completa cada matéria até quatro bimestres.
     for nome, dicionario_materias in materias_por_aluno.items():
 
         for materia, notas in dicionario_materias.items():
-
             while len(notas) < 4:
                 notas.append("")
 
         linha_aluno = [nome, dicionario_materias]
-        
+
         lista_geral.append(linha_aluno)
 
-polimento_de_dados()
+    # MANTIDO: retorna a lista já processada.
+    # O retorno é útil caso outra parte do programa precise recebê-la.
+    return lista_geral
 
+
+# ALTERADO: removida a chamada automática:
+# polimento_de_dados()
+#
+# A função agora será chamada pelo main.py, depois que
+# o usuário cadastrar as notas.
 
 
 def gerar_lista_para_csv(dados_gerais):
     lista_para_cada_linha = []
     indice_para_cada_materia = 0
 
+    # MANTIDO: percorre cada aluno e suas matérias.
     for cont in dados_gerais:
 
         nome_vingente = cont[0]
@@ -67,29 +80,33 @@ def gerar_lista_para_csv(dados_gerais):
             elif key == "educação física":
                 indice_para_cada_materia = 7
 
+            # MANTIDO: cada índice representa um bimestre.
             for indice_bimestre, nota in enumerate(value):
 
-                # Verifica se já existe uma linha desse aluno
                 if indice_bimestre < len(linhas_do_aluno):
 
-                    # Pega a linha correspondente ao bimestre
+                    # MANTIDO: reutiliza a linha do bimestre existente.
                     linha_csv = linhas_do_aluno[indice_bimestre]
 
-                    # Adiciona a nova matéria
+                    # MANTIDO: preenche a coluna da matéria.
                     linha_csv[indice_para_cada_materia] = str(nota)
 
                 else:
 
-                    # Cria uma nova linha para o aluno
-                    linha_csv = [nome_vingente, "", "", "", "", "", "", ""]
+                    # MANTIDO: cria uma linha para o bimestre
+                    # quando ela ainda não existe.
+                    linha_csv = [
+                        nome_vingente, "", "", "",
+                        "", "", "", ""
+                    ]
 
                     linha_csv[indice_para_cada_materia] = str(nota)
 
                     lista_para_cada_linha.append(linha_csv)
                     linhas_do_aluno.append(linha_csv)
 
+    # MANTIDO: devolve as linhas preparadas para o CSV.
     return lista_para_cada_linha
-
 
 
 

@@ -35,7 +35,7 @@ def verifica_aluno_exstir(alunos_recebido, alunos_existentes):
     return retorno
 
 
-if __name__ == "__main__":
+def armazena():
     while True:
         nome_para_verificar_ou_cadastrar =  input(str("Qual aluno deseja cadastrar?: "))
         if verifica_aluno_exstir(nome_para_verificar_ou_cadastrar.strip(), alunos_ja_cadastrados()) == False:
